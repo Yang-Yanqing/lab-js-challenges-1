@@ -13,13 +13,48 @@ const repeatedWords = [
   "matter"
 ];
 
-function howManyTimes() {}
+function howManyTimes(repeatedWords,targetWord) 
+{
+  if(repeatedWords.length===0)
+  {
+    return 0;
+  }
+  
+  else
+    {
+      let count=0;
+      for(i=0;i<repeatedWords.length;i++)
+        {
+          if(repeatedWords[i]===targetWord)
+            {
+              count++
+          }
+        }
+        return count;
+    }
+}
 
 
 
 
 // Iteration 2 | Number Sequence
-function createSequence() {}
+function createSequence(N) 
+{
+  let arrayReturn=[];
+  if(N===0)
+    {
+    return arrayReturn;
+  }
+  else
+    {
+ for(i=0;i<N+1;i++)
+  {
+  arrayReturn.push(i);
+  }
+  
+  return arrayReturn;
+  }
+}
 
 
 
@@ -27,7 +62,13 @@ function createSequence() {}
 // Iteration 3 | Multiply for Each
 const numbers = [1, 2, 5, 10, 13, 50];
 
-function multiplyBy() {}
+function multiplyBy(numbers,multipliEr) {
+  const result=[];
+  numbers.forEach(element=> 
+    {result.push(element*multipliEr) ;    
+  });
+return result;
+}
 
 
 
@@ -36,7 +77,25 @@ function multiplyBy() {}
 const original = ["cat", "dog", "fish", "bird", "cat", "fish"];
 const toRemove = ["cat", "dog"];
 
-function filterOut() {}
+function filterOut(original,toRemove) 
+{
+  let result=[]
+  if(original.length===0){
+    return null
+  }
+
+  else
+    {    
+  for(i=0;i<original.length;i++)
+      {
+    if(!toRemove.includes(original[i]))
+      {
+       result.push(original[i]);
+    }
+  }
+return result
+}
+}
 
 
 
@@ -56,7 +115,22 @@ const duplicateWords = [
   "bring"
 ];
 
-function uniquifyArray() {}
+function uniquifyArray(wordsArray) 
+{
+  let result=[];
+  if(!Array.isArray(wordsArray) ||wordsArray.length===0)
+    {return null}
+
+  for(let i=0;i<wordsArray.length;i++)
+     {
+      if(wordsArray.indexOf(wordsArray[i])===i)
+      {result.push(wordsArray[i])}
+     }
+        
+    
+   return result;
+    
+}
 
 
 
@@ -85,4 +159,67 @@ const matrix = [
   [1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 1, 89, 19, 67, 48]
 ];
 
-function greatestProduct() {}
+function greatestProduct(matrix) {
+  
+  // ------------ Vertical  Iteration Function --------------------------------
+  function horizonSweep(matrix) {
+    let product = 0;
+    let maxProduct = 0;
+    for (let i = 0; i < matrix.length; i++) {
+      for (let j = 0; j <= matrix[i].length - 4; j++) {
+        product = matrix[i][j] * matrix[i][j + 1] * matrix[i][j + 2] * matrix[i][j + 3];
+        if (product > maxProduct) {
+          maxProduct = product;
+        }
+      }
+    }
+    return maxProduct;
+  }
+
+  // ------------ Function to Rotate Matrix Left by 90 Degrees -------------------
+  function rotateLeft(m) {
+    // Get number of rows and columns in the original matrix
+    let rows = m.length;
+    let cols;
+    if (rows > 0) {
+      cols = m[0].length;
+    } else {
+      cols = 0;
+    }
+    // Create a new empty matrix with swapped dimensions
+    let rotated = [];
+    for (let i = 0; i < cols; i++) {
+      rotated[i] = new Array(rows);
+    }
+
+    // Fill the new matrix with rotated values (90 degrees to the left)
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < cols; j++) {
+        rotated[cols - 1 - j][i] = m[i][j];
+      }
+    }
+    return rotated;
+  }
+
+  let maxProduct1 = horizonSweep(matrix);
+  let rotatedMatrix = rotateLeft(matrix);
+  let maxProduct2 = horizonSweep(rotatedMatrix);
+
+  let maxProduct = Math.max(maxProduct1, maxProduct2);
+
+  return maxProduct;
+}
+
+
+
+
+// for(let i=0;i<=matrix.length-4;i++)
+    // {
+    //   for(let j=0;j<matrix[i].length;j++)
+    //     {
+    //         x=matrix[i][j]*matrix[i+1][j]*matrix[i+2][j]*matrix[i+3][j]
+            
+    //         if(Product>maxProduck) {maxProduck=Product}
+    //     }
+    // }
+    
